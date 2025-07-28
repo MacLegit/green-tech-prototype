@@ -1,3 +1,4 @@
+
 let classifier;
 let map;
 let mapInitialized = false;
@@ -68,8 +69,21 @@ async function classifyImage() {
     const results = await classifier.classify(image);
     console.log(results);
 
-    const label = results[0].label.toLowerCase();
-    document.getElementById("result").innerText = `🌿 Planta detectada: ${label}`;
+    const label = results[0].label;
+    const confidence = results[0].confidence;
+
+    const resultDiv = document.getElementById("result");
+    resultDiv.innerHTML = `🌿 Planta detectada: <strong>${label}</strong><br>
+      🔎 Confiança: ${(confidence * 100).toFixed(2)}%`;
+
+    if (
+      !label.toLowerCase().includes("plant") &&
+      !label.toLowerCase().match(/leaf|tree|flower|flora|cactus/)
+    ) {
+      resultDiv.innerHTML += `<br><small>⚠️ Este modelo pode identificar objetos além de plantas.</small>`;
+    }
+
+    const labelLower = label.toLowerCase();
 
     const plantasInfo = {
       cactus: {
@@ -79,10 +93,9 @@ async function classifyImage() {
         pragasComuns: ["Cochonilha", "Ácaros"],
         imgDoencas: ["cochonilha.jpg", "acaros.jpg"]
       }
-      // Adicione mais plantas se quiser
     };
 
-    const match = Object.keys(plantasInfo).find(p => label.includes(p));
+    const match = Object.keys(plantasInfo).find(p => labelLower.includes(p));
     const info = plantasInfo[match];
 
     if (info) {

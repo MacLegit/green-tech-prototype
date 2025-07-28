@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GreenKast App</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+
+  <!-- Libs via CDN -->
+  <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+  <header>
+    <div class="logo-area">
+      <img src="assets/icons/icon-512.png" alt="GreenKast" class="logo-img" />
+      <h1>GREENKAST</h1>
+    </div>
+    <nav>
+      <button onclick="navigate('home')">Início</button>
+      <button onclick="navigate('greenkast')">Identificador</button>
+      <button onclick="navigate('mapa')">Mapa</button>
+      <button onclick="navigate('dashboard')">Clima</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="active">
+      <h2>Bem-vindo!</h2>
+      <p>Use os botões acima para navegar.</p>
+    </section>
+
+    <section id="greenkast">
+      <h2>Identificador de Plantas</h2>
+      <input id="inputImg" type="file" accept="image/*" />
+
+      <div class="img-container">
+        <img id="plantImg" width="250" />
+        <div class="btns-imagem">
+          <button id="btn-classify" disabled>Classificar</button>
+          <button id="btn-remover" style="display:none;">Remover imagem</button>
+        </div>
+      </div>
+
+      <p id="result"></p>
+
+      <div id="dados-planta" style="display:none;">
+        <p><strong>Nome científico:</strong> <span id="nomeCientifico"></span></p>
+        <p><strong>Consumo de água:</strong> <span id="agua"></span></p>
+        <p><strong>Captura de CO₂:</strong> <span id="co2"></span></p>
+        <p><strong>Pragas comuns:</strong> <span id="pragas"></span></p>
+        <div id="imgsDoencas"></div>
+      </div>
+    </section>
+
+    <section id="mapa">
+      <h2>Mapa de Plantas Nativas</h2>
+      <div id="map" style="height: 470px"></div>
+    </section>
+
+    <section id="dashboard">
+      <h2>Clima Local</h2>
+      <canvas id="climateChart" width="500" height="150"></canvas>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
